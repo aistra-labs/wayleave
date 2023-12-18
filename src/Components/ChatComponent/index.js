@@ -8,6 +8,8 @@ const ChatComponent = ({ messageData }) => {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState(messageData);
   const chatContainerRef = useRef(null);
+  const [isloading, setIsloading] = useState(false);
+  const [ownRefresh, setOwnRefresh] = useState(false);
 
   const scrollToLastMessage = () => {
     if (chatContainerRef.current) {
@@ -36,16 +38,24 @@ const ChatComponent = ({ messageData }) => {
 
   useEffect(() => {
     setMessages(messageData);
-  }, [messages, messageData]);
+  }, [messageData]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!input.trim()) return;
     try {
+      setIsloading(true);
       const url = "conversation";
       const data = { wayLeaveId: 1, text: input, landLordId: 1 };
       setInput("");
       const result = await apiRequest(url, "POST", data);
       const userMessage = result.data;
+      setIsloading(false);
+      setOwnRefresh(true);
+      setTimeout(() => {
+        getChatDetails();
+        setOwnRefresh(false);
+      }, 2000);
       setMessages((prevMessages) => [...prevMessages, userMessage]);
     } catch (error) {
       // Handle error
@@ -78,14 +88,16 @@ const ChatComponent = ({ messageData }) => {
           {messages &&
             messages.map((message, index) => (
               <div className="chatbot-wrapper">
-                <div className={message.sender !== "Bot" ? "chat-userimg" : ""}>
-                  <img
-                    src={
-                      images[message.sender !== "Bot" ? "CS.svg" : "bot.svg"]
-                    }
-                    loading="lazy"
-                    alt="bot"
-                  />
+                <div
+                  className={
+                    message.sender === "Bot" ? "chat-userimg" : "chat-user"
+                  }
+                >
+                  {message.sender === "Bot" ? (
+                    <img src={images["bot.svg"]} loading="lazy" alt="bot" />
+                  ) : (
+                    <div className="sender-name">{getName(message.sender)}</div>
+                  )}
                 </div>
                 <div
                   key={index}
@@ -104,6 +116,13 @@ const ChatComponent = ({ messageData }) => {
                 </div>
               </div>
             ))}
+          {isloading && <div className="loading">Loading...</div>}
+          {ownRefresh && (
+            <div className="own-refresh">
+              Click refresh button if not get response.
+            </div>
+          )}
+
           <div className="refresh" onClick={() => getChatDetails()}>
             Refresh
           </div>
