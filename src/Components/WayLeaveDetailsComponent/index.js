@@ -118,7 +118,9 @@ const WayLeaveComponent = ({ wayLeave, summary }) => {
                     {wayLeave &&
                       wayLeave.contractVersions &&
                       wayLeave.contractVersions.map((pdf) => (
-                        <a href={pdf.contractUrl}>{pdf.contractType}</a>
+                        <a href={pdf.contractUrl} target="blank">
+                          {pdf.contractType}
+                        </a>
                       ))}
                   </div>{" "}
                 </div>

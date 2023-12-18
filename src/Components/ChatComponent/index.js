@@ -18,6 +18,17 @@ const ChatComponent = ({ messageData }) => {
       }
     }
   };
+  const getName = (fullName) => {
+    const words = fullName.split(" ");
+
+    // Extract the initials
+    const initials = words
+      .map((word) => word.charAt(0))
+      .join("")
+      .toUpperCase();
+
+    return initials;
+  };
 
   useEffect(() => {
     scrollToLastMessage();
