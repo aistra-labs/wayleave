@@ -11,7 +11,7 @@
     position: relative;
   }
   .chatbot-messages {
-    height: 635px;
+    height: 600px;
     overflow-y: scroll;
     padding: 8px;
     display: flex;

@@ -1,16 +1,14 @@
-import React, { memo } from "react";
+import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
-const Header = () => {
+import images from "../images/images";
+const Header = ({ title }) => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" style={{ backgroundColor: "#243347" }}>
@@ -24,8 +22,19 @@ const Header = () => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            WAYLEAVE
+          <Box sx={{ flexGrow: 0 }}>
+            <IconButton sx={{ p: 0 }}>
+              <Avatar alt="Remy Sharp" src={images["logo.svg"]} />
+            </IconButton>
+          </Box>
+          {"  "}
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1 }}
+            style={{ marginLeft: "10px" }}
+          >
+            {title}
           </Typography>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">

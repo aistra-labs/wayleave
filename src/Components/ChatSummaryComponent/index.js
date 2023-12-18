@@ -7,14 +7,12 @@ const ChatSummaryComponent = ({ summary }) => {
     <div className="chat-summary-box">
       <div className="chat-summary-heading">
         <img src={images["chat-summary.svg"]} loading="lazy" alt="building" />{" "}
-        <p>Chat History Summary</p>
+        <p>Wayleave negotiation summary</p>
       </div>
-      {/* <div className="chat-summary-wrapper"> */}
       <ul className="chat-summary-wrapper">
         {summary && summary.map((detail) => <li>{detail}</li>)}
       </ul>
     </div>
-    // </div>
   );
 };
 export default ChatSummaryComponent;
