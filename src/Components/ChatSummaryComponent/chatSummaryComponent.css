@@ -1,0 +1,32 @@
+.chat-summary-box{
+    border: 1px solid #E8E8E8;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 5px;
+  .chat-summary-heading{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 10px;
+    p{
+        margin-left:20px;
+        font-size: 18px;
+        font-weight: 600;
+    }
+    img{
+        width:42px;
+        height: 42px;
+    }
+  }
+  .chat-summary-wrapper{
+    font-size: 13px;
+    line-height: 18px;
+    color: #575756;
+    height: 220px;
+    overflow: scroll;
+    li{
+        margin: 15px 0px;
+    }
+}
+
+}
