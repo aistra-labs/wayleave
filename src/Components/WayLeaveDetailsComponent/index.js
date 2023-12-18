@@ -1,33 +1,13 @@
-import { useEffect, useState } from "react";
-import ChatComponent from "../ChatComponent";
 import ChatSummaryComponent from "../ChatSummaryComponent";
 import Header from "../HeaderComponent";
 import images from "../images/images";
 import "../WayLeaveDetailsComponent/wayLeaveDetailsComponent.css";
-import apiRequest from "../api/api";
-const WayLeaveComponent = () => {
-  const [wayLeave, setWayLeave] = useState({});
-  useEffect(() => {
-    getWayLeaveDeatails();
-  }, []);
-
-  const getWayLeaveDeatails = async () => {
-    try {
-      const url = "get?wayLeaveId=WL000001";
-      const result = await apiRequest(url, "GET");
-      setWayLeave(result && result.data);
-      console.log(result, "resultresult");
-    } catch (error) {
-      // Handle error
-      console.error("Error in POST request:", error);
-    }
-  };
-
+const WayLeaveComponent = ({ wayLeave, summary }) => {
   return (
     <>
       <div className="wayleave-details-wrapper">
         <div>
-          <Header />{" "}
+          <Header title={"Wayleave Detail"} />{" "}
         </div>
         <div className="wayleave-flex-wrapper">
           <div className="wayleave-box-wrapper">
@@ -66,12 +46,7 @@ const WayLeaveComponent = () => {
               </div>
               <div className="detail-data">
                 <div className="details-icon">
-                  <img
-                    // className="google-btn"
-                    src={images["card.svg"]}
-                    loading="lazy"
-                    alt="building"
-                  />
+                  <img src={images["card.svg"]} loading="lazy" alt="building" />
                 </div>
                 <div className="details-text">
                   <div className="title">Wayleave ID:</div>
@@ -83,7 +58,6 @@ const WayLeaveComponent = () => {
               <div className="detail-data">
                 <div className="details-icon">
                   <img
-                    // className="google-btn"
                     src={images["connect.svg"]}
                     loading="lazy"
                     alt="building"
@@ -96,12 +70,7 @@ const WayLeaveComponent = () => {
               </div>
               <div className="detail-data">
                 <div className="details-icon">
-                  <img
-                    // className="google-btn"
-                    src={images["user.svg"]}
-                    loading="lazy"
-                    alt="building"
-                  />
+                  <img src={images["user.svg"]} loading="lazy" alt="building" />
                 </div>
                 <div className="details-text">
                   <div className="title">Proprietor ID:</div>
@@ -113,7 +82,6 @@ const WayLeaveComponent = () => {
               <div className="detail-data bb-none">
                 <div className="details-icon">
                   <img
-                    // className="google-btn"
                     src={images["users.svg"]}
                     loading="lazy"
                     alt="building"
@@ -134,14 +102,14 @@ const WayLeaveComponent = () => {
                   <span> {wayLeave?.details?.currentState}</span>
                 </div>
               </div>
-              <div className="detail-data-status">
+              {/* <div className="detail-data-status">
                 <div className="details-label">Contract Open Trigger:</div>
                 <div className="details-value">Letter 2</div>
               </div>
               <div className="detail-data-status">
                 <div className="details-label">Contract Version:</div>
                 <div className="details-value">v3</div>
-              </div>
+              </div> */}
               <div className="detail-data-status">
                 <div className="details-label">Contract Versions:</div>
                 <div className="details-value">
@@ -150,7 +118,7 @@ const WayLeaveComponent = () => {
                     {wayLeave &&
                       wayLeave.contractVersions &&
                       wayLeave.contractVersions.map((pdf) => (
-                        <a href="#">{pdf.contractType}</a>
+                        <a href={pdf.contractUrl}>{pdf.contractType}</a>
                       ))}
                   </div>{" "}
                 </div>
@@ -217,7 +185,7 @@ const WayLeaveComponent = () => {
             </div>
           </div>
         </div>
-        <ChatSummaryComponent summary={wayLeave?.chatSummary} />
+        <ChatSummaryComponent summary={summary} />
       </div>
     </>
   );

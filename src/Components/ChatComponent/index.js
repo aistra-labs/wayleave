@@ -4,9 +4,9 @@ import React, { useState, useEffect, useRef } from "react";
 import images from "../images/images";
 import apiRequest from "../api/api";
 
-const ChatComponent = () => {
+const ChatComponent = ({ messageData }) => {
   const [input, setInput] = useState("");
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState(messageData);
   const chatContainerRef = useRef(null);
 
   const scrollToLastMessage = () => {
@@ -21,19 +21,21 @@ const ChatComponent = () => {
 
   useEffect(() => {
     scrollToLastMessage();
-  }, [messages]);
+  }, [messages, messageData]);
 
+  useEffect(() => {
+    setMessages(messageData);
+  }, [messages, messageData]);
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!input.trim()) return;
-    console.log(input, "inputinput");
     try {
       const url = "conversation";
       const data = { wayLeaveId: 1, text: input, landLordId: 1 };
+      setInput("");
       const result = await apiRequest(url, "POST", data);
       const userMessage = result.data;
       setMessages((prevMessages) => [...prevMessages, userMessage]);
-      setInput("");
     } catch (error) {
       // Handle error
       console.error("Error in POST request:", error);
@@ -58,7 +60,7 @@ const ChatComponent = () => {
   return (
     <div className="wayleave-chat-wrapper">
       <div>
-        <Header />
+        <Header title={"Wayleave Grantor Bot"} />
       </div>
       <div className="chatbot-container">
         <div className="chatbot-messages" ref={chatContainerRef}>
