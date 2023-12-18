@@ -43,7 +43,7 @@ const WayLeaveDetailsContainer = () => {
     }
   };
   const handleRefesh = () => {
-    getChatDetails(id);
+    getChatDetails(wayLeaveId);
   };
 
   return (
@@ -57,7 +57,7 @@ const WayLeaveDetailsContainer = () => {
             messageData={messages}
             wayLeaveId={wayLeaveId}
             landLordId={landLordId}
-            refresh={handleRefesh}
+            handleRefesh={handleRefesh}
           />
         }
       </div>

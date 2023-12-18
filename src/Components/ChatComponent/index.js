@@ -4,7 +4,12 @@ import React, { useState, useEffect, useRef } from "react";
 import images from "../images/images";
 import apiRequest from "../api/api";
 
-const ChatComponent = ({ messageData }) => {
+const ChatComponent = ({
+  messageData,
+  wayLeaveId,
+  landLordId,
+  handleRefesh,
+}) => {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState(messageData);
   const chatContainerRef = useRef(null);
@@ -46,14 +51,18 @@ const ChatComponent = ({ messageData }) => {
     try {
       setIsloading(true);
       const url = "conversation";
-      const data = { wayLeaveId: 1, text: input, landLordId: 1 };
+      const data = {
+        wayLeaveId: wayLeaveId,
+        text: input,
+        landLordId: landLordId,
+      };
       setInput("");
       const result = await apiRequest(url, "POST", data);
       const userMessage = result.data;
       setIsloading(false);
       setOwnRefresh(true);
       setTimeout(() => {
-        getChatDetails();
+        refreshChat();
         setOwnRefresh(false);
       }, 2000);
       setMessages((prevMessages) => [...prevMessages, userMessage]);
@@ -63,19 +72,22 @@ const ChatComponent = ({ messageData }) => {
     }
   };
 
-  useEffect(() => {
-    getChatDetails();
-  }, []);
+  // useEffect(() => {
+  //   getChatDetails();
+  // }, []);
 
-  const getChatDetails = async () => {
-    try {
-      const url = "conversations?wayLeaveId=1";
-      const result = await apiRequest(url, "GET");
-      setMessages(result && result.data.conversations);
-    } catch (error) {
-      // Handle error
-      console.error("Error in POST request:", error);
-    }
+  // const getChatDetails = async () => {
+  //   try {
+  //     const url = "conversations?wayLeaveId=";
+  //     const result = await apiRequest(url, "GET");
+  //     setMessages(result && result.data.conversations);
+  //   } catch (error) {
+  //     // Handle error
+  //     console.error("Error in POST request:", error);
+  //   }
+  // };
+  const refreshChat = () => {
+    handleRefesh();
   };
 
   return (
@@ -117,13 +129,13 @@ const ChatComponent = ({ messageData }) => {
               </div>
             ))}
           {isloading && <div className="loading">Loading...</div>}
-          {ownRefresh && (
+          {/* {ownRefresh && (
             <div className="own-refresh">
               Click refresh button if not get response.
             </div>
-          )}
+          )} */}
 
-          <div className="refresh" onClick={() => getChatDetails()}>
+          <div className="refresh" onClick={refreshChat}>
             Refresh
           </div>
         </div>
