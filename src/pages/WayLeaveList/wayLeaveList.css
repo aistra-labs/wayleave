@@ -1,0 +1,45 @@
+.wayleave-managment-container{
+    margin: 10px;
+    .managment-header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        border-bottom: 1px solid #E8E8E8;
+        .managment-title{
+            color: #243347;
+            font-size: 24px;
+            font-weight: 600;
+            width: 60%;
+        }
+        .managment-button-Wrapper{
+             display: flex;
+             align-items: center;
+             justify-content: flex-end;  
+             width: 50%; 
+             .search{
+                width: 60%;
+                border:1px solid #ccc;
+                border-radius: 8px;
+                .search-inner{
+                    height: 40px;
+                }
+             }
+             .buttons-box{
+                width: 40%;
+                margin-left: 40px;
+                display: flex;
+                align-items: center;
+                button{
+                    border: 1px solid #E0E0E0 !important;
+                    color: #575756 !important;
+                    margin-right: 10px !important;
+                    border-radius: 8px !important;
+                }
+             }
+       }
+    }
+    .managment-list-box{
+        margin: 20px 0;
+    }
+}
