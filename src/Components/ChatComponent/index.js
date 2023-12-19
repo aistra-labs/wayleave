@@ -93,7 +93,7 @@ const ChatComponent = ({
   return (
     <div className="wayleave-chat-wrapper">
       <div>
-        <Header title={"Wayleave Grantor Bot"} />
+        <Header title={"Aistra Wayleave Bot"} />
       </div>
       <div className="chatbot-container">
         <div className="chatbot-messages" ref={chatContainerRef}>
@@ -117,7 +117,8 @@ const ChatComponent = ({
                     message.sender !== "Bot" ? "user-message" : "ai-message"
                   }`}
                 >
-                  {message.text}
+                  <div dangerouslySetInnerHTML={{ __html: message.text }} />
+                  <div />
                   <div
                     className={
                       message.sender !== "Bot" ? "chat-time" : "chat-time-ai"

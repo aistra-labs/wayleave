@@ -2,6 +2,7 @@ import ChatSummaryComponent from "../ChatSummaryComponent";
 import Header from "../HeaderComponent";
 import images from "../images/images";
 import "../WayLeaveDetailsComponent/wayLeaveDetailsComponent.css";
+import Skeleton from "@mui/material/Skeleton";
 const WayLeaveComponent = ({ wayLeave, summary }) => {
   return (
     <>
@@ -10,12 +11,12 @@ const WayLeaveComponent = ({ wayLeave, summary }) => {
           <Header title={"Wayleave Detail"} />{" "}
         </div>
         <div className="wayleave-flex-wrapper">
+          <Skeleton variant="circular"></Skeleton>
           <div className="wayleave-box-wrapper">
             <div className="details-wrapper">
               <div className="detail-data">
                 <div className="details-icon">
                   <img
-                    // className="google-btn"
                     src={images["building.svg"]}
                     loading="lazy"
                     alt="building"
@@ -31,7 +32,6 @@ const WayLeaveComponent = ({ wayLeave, summary }) => {
               <div className="detail-data">
                 <div className="details-icon">
                   <img
-                    // className="google-btn"
                     src={images["at-rate.svg"]}
                     loading="lazy"
                     alt="building"
