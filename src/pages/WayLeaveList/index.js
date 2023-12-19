@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { DataGrid, GridPagination } from "@mui/x-data-grid";
+import { DataGrid } from "@mui/x-data-grid";
 import Header from "../../Components/HeaderComponent";
 import Button from "@mui/material/Button";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
@@ -158,38 +158,17 @@ const WayLeaveList = () => {
       </div>
       <div className="managment-list-box">
         <div style={{ height: 400, width: "100%" }}>
-          <div>
-            <GridPagination
-              component="div"
-              count={rows.length}
-              page={page}
-              onPageChange={handleChangePage}
-              rowsPerPage={rowsPerPage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-            <DataGrid
-              rows={rows}
-              columns={columns}
-              pageSize={rowsPerPage}
-              pagination
-              page={page}
-              onPageChange={handleChangePage}
-              rowsPerPageOptions={[5, 10]}
-              components={{
-                Pagination: (props) => (
-                  <GridPagination
-                    {...props}
-                    component="div"
-                    count={rows.length}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    rowsPerPage={rowsPerPage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                  />
-                ),
-              }}
-            />
-          </div>
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 5 },
+              },
+            }}
+            pageSizeOptions={[5, 10]}
+            checkboxSelection
+          />
         </div>
       </div>
     </div>
