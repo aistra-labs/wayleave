@@ -8,12 +8,12 @@
     align-items: center;
     justify-content: flex-start;
     margin-left: 10px;
-    p{
+    .summary-text{
         margin-left:20px;
         font-size: 18px;
         font-weight: 600;
     }
-    img{
+    .summary-icon{
         width:42px;
         height: 42px;
     }

@@ -99,7 +99,7 @@ const WayLeaveComponent = ({ wayLeave, summary }) => {
               <div className="detail-data-status">
                 <div className="details-label">Current State:</div>
                 <div className="details-value">
-                  <span> {wayLeave?.details?.currentState}</span>
+                  <p className="status"> {wayLeave?.details?.currentState}</p>
                 </div>
               </div>
               {/* <div className="detail-data-status">
@@ -118,7 +118,11 @@ const WayLeaveComponent = ({ wayLeave, summary }) => {
                     {wayLeave &&
                       wayLeave.contractVersions &&
                       wayLeave.contractVersions.map((pdf) => (
-                        <a href={pdf.contractUrl} target="blank">
+                        <a
+                          className="file-tag"
+                          href={pdf.contractUrl}
+                          target="blank"
+                        >
                           {pdf.contractType}
                         </a>
                       ))}

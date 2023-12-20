@@ -67,7 +67,7 @@
             line-height: 18.4px;
             font-weight: 500;
             margin:0 5px;
-            span{
+            .status{
               padding: 5px;
               font-size: 9px;
               background-color: #FFF7ED;
@@ -79,7 +79,7 @@
             .details-pdf{
               display: flex;
               flex-wrap: wrap;
-              a{
+              .file-tag{
                 padding: 2px 5px;
                 background-color: #68B5C8;
                 border-radius: 8px;
