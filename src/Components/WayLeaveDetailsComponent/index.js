@@ -11,7 +11,6 @@ const WayLeaveComponent = ({ wayLeave, summary }) => {
           <Header title={"Wayleave Detail"} />{" "}
         </div>
         <div className="wayleave-flex-wrapper">
-          <Skeleton variant="circular"></Skeleton>
           <div className="wayleave-box-wrapper">
             <div className="details-wrapper">
               <div className="detail-data">
