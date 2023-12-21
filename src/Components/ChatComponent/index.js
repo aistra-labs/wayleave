@@ -16,7 +16,7 @@ const Typewriter = ({ text }) => {
       intervalId = setInterval(() => {
         setDisplayText((prevText) => prevText + text[currentIndex]);
         setCurrentIndex((prevIndex) => prevIndex + 1);
-      }, 50); // Adjust the interval as needed
+      }, 20); // Adjust the interval as needed
     }
 
     return () => clearInterval(intervalId);
