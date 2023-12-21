@@ -142,7 +142,7 @@ const ChatComponent = ({
         setOwnRefresh(false);
         setBotMessage(true);
         scrollToLastMessage();
-        addBotlastMessage();
+        // addBotlastMessage();
       }, 10);
     } catch (error) {
       // Handle error
