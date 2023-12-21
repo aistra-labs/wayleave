@@ -4,18 +4,56 @@ import React, { useState, useEffect, useRef } from "react";
 import images from "../images/images";
 import apiRequest from "../api/api";
 
+const Typewriter = ({ text }) => {
+  const [displayText, setDisplayText] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const lastMessageRef = useRef(null);
+
+  useEffect(() => {
+    let intervalId;
+
+    if (currentIndex < text.length) {
+      intervalId = setInterval(() => {
+        setDisplayText((prevText) => prevText + text[currentIndex]);
+        setCurrentIndex((prevIndex) => prevIndex + 1);
+      }, 50); // Adjust the interval as needed
+    }
+
+    return () => clearInterval(intervalId);
+  }, [text, currentIndex]);
+
+  useEffect(() => {
+    scrollToLastMessage();
+  }, [displayText]);
+
+  const scrollToLastMessage = () => {
+    if (lastMessageRef.current) {
+      lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  // Function to sanitize HTML content
+  const createMarkup = () => {
+    return { __html: displayText };
+  };
+
+  return <div ref={lastMessageRef} dangerouslySetInnerHTML={createMarkup()} />;
+};
+
 const ChatComponent = ({
   messageData,
   wayLeaveId,
   landLordId,
   handleRefesh,
+  landLordName,
 }) => {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState(messageData);
   const chatContainerRef = useRef(null);
   const [isloading, setIsloading] = useState(false);
   const [ownRefresh, setOwnRefresh] = useState(false);
-
+  const [botMessage, setBotMessage] = useState(false);
+  const [showTyping, setShowTyping] = useState(false);
   const scrollToLastMessage = () => {
     if (chatContainerRef.current) {
       const { scrollTop, scrollHeight, clientHeight } =
@@ -25,6 +63,30 @@ const ChatComponent = ({
       }
     }
   };
+  const addBotlastMessage = () => {
+    const botMessageData = {
+      sendTime: formattedDate,
+      sender: "Bot",
+      text: "If you find the terms acceptable, kindly sign the wayleave agreement thanks!",
+    };
+
+    setTimeout(() => {
+      if (botMessage === true) {
+        setMessages((prevMessages) => [...prevMessages, botMessageData]);
+      }
+    }, 40000);
+  };
+
+  const currentDate = new Date();
+  const formattedDate = currentDate.toLocaleString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    hour12: true,
+  });
   const getName = (fullName) => {
     const words = fullName.split(" ");
 
@@ -49,7 +111,7 @@ const ChatComponent = ({
     e.preventDefault();
     if (!input.trim()) return;
     try {
-      setIsloading(true);
+      setShowTyping(false);
       const url = "conversation";
       const data = {
         wayLeaveId: wayLeaveId,
@@ -57,35 +119,48 @@ const ChatComponent = ({
         landLordId: landLordId,
       };
       setInput("");
+      const inputText = {
+        text: input,
+        sender: landLordName,
+        sendTime: formattedDate,
+      };
+      setBotMessage(false);
+      setTimeout(() => {
+        setMessages((prevMessages) => [...prevMessages, inputText]);
+        setIsloading(true);
+      }, 100);
+
       const result = await apiRequest(url, "POST", data);
       const userMessage = result.data;
       setIsloading(false);
       setOwnRefresh(true);
+
       setTimeout(() => {
         refreshChat();
+        setShowTyping(true);
+        setMessages((prevMessages) => [...prevMessages, userMessage.response]);
         setOwnRefresh(false);
-      }, 2000);
-      setMessages((prevMessages) => [...prevMessages, userMessage]);
+        setBotMessage(true);
+        scrollToLastMessage();
+        addBotlastMessage();
+      }, 10);
     } catch (error) {
       // Handle error
       console.error("Error in POST request:", error);
     }
   };
 
-  // useEffect(() => {
-  //   getChatDetails();
-  // }, []);
+  const getChatDetails = async (wayLeaveId) => {
+    try {
+      const url = "conversations?wayLeaveId=" + wayLeaveId;
+      const result = await apiRequest(url, "GET");
+      setMessages(result && result.data.conversations);
+    } catch (error) {
+      // Handle error
+      console.error("Error in Get request:", error);
+    }
+  };
 
-  // const getChatDetails = async () => {
-  //   try {
-  //     const url = "conversations?wayLeaveId=";
-  //     const result = await apiRequest(url, "GET");
-  //     setMessages(result && result.data.conversations);
-  //   } catch (error) {
-  //     // Handle error
-  //     console.error("Error in POST request:", error);
-  //   }
-  // };
   const refreshChat = () => {
     handleRefesh();
   };
@@ -117,7 +192,16 @@ const ChatComponent = ({
                     message.sender !== "Bot" ? "user-message" : "ai-message"
                   }`}
                 >
-                  <div dangerouslySetInnerHTML={{ __html: message.text }} />
+                  {showTyping && index === messages.length - 1 ? (
+                    <Typewriter text={message.text} delay={10} />
+                  ) : messages.length < 4 ? (
+                    <Typewriter text={message.text} delay={10} />
+                  ) : message.sender !== "bot" ? (
+                    <div dangerouslySetInnerHTML={{ __html: message.text }} />
+                  ) : (
+                    <Typewriter text={message.text} delay={10} />
+                  )}
+
                   <div />
                   <div
                     className={
@@ -129,14 +213,17 @@ const ChatComponent = ({
                 </div>
               </div>
             ))}
-          {isloading && <div className="loading">Loading...</div>}
-          {/* {ownRefresh && (
-            <div className="own-refresh">
-              Click refresh button if not get response.
+          {isloading && (
+            <div class="chat-bubble">
+              <div class="typing">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+              </div>
             </div>
-          )} */}
+          )}
 
-          <div className="refresh" onClick={refreshChat}>
+          <div className="refresh" onClick={() => getChatDetails(wayLeaveId)}>
             Refresh
           </div>
         </div>
