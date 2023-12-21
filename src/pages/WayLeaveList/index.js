@@ -7,27 +7,6 @@ import TuneIcon from "@mui/icons-material/Tune";
 import "../WayLeaveList/wayLeaveList.css";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
-import IconButton from "@mui/material/IconButton";
-const columns = [
-  { field: "id", headerName: "ID", width: 70 },
-  { field: "wayleave_id", headerName: "Wayleave ID", width: 70 },
-  { field: "route_id", headerName: "Route ID", width: 130 },
-  { field: "proprietor_id", headerName: "Proprietor ID", width: 130 },
-  { field: "proprietor_name", headerName: "Proprietor Name", width: 90 },
-  { field: "proprietor_address", headerName: "Propreitor Address", width: 160 },
-  {
-    field: "stage",
-    headerName: "Stage",
-    // description: "This column has a value getter and is not sortable.",
-    sortable: false,
-    width: 90,
-    renderCell: (params) => {
-      const isActive = params.stage;
-      return <>{isActive ? <div>test</div> : <div>no</div>}</>;
-    },
-  },
-  { field: "criticality", headerName: "Criticality", width: 90 },
-];
 
 const rows = [
   {
@@ -100,21 +79,141 @@ const rows = [
     stage: "Contract being Reviewed",
     criticality: "2",
   },
+  {
+    id: 8,
+    wayleave_id: "W3284.0007",
+    route_id: "R3284",
+    proprietor_id: "P305699",
+    proprietor_name: "Yuki Nakamura",
+    proprietor_address: "18, Stockwell Close, Bromley",
+    stage: "Contract being Reviewed",
+    criticality: "2",
+  },
+  {
+    id: 9,
+    wayleave_id: "W3284.0007",
+    route_id: "R3284",
+    proprietor_id: "P305699",
+    proprietor_name: "Yuki Nakamura",
+    proprietor_address: "18, Stockwell Close, Bromley",
+    stage: "Contract Signed",
+    criticality: "2",
+  },
+  {
+    id: 10,
+    wayleave_id: "W3284.0007",
+    route_id: "R3284",
+    proprietor_id: "P305699",
+    proprietor_name: "Yuki Nakamura",
+    proprietor_address: "18, Stockwell Close, Bromley",
+    stage: "Contract being Reviewed",
+    criticality: "2",
+  },
+  {
+    id: 11,
+    wayleave_id: "W3284.0007",
+    route_id: "R3284",
+    proprietor_id: "P305699",
+    proprietor_name: "Yuki Nakamura",
+    proprietor_address: "18, Stockwell Close, Bromley",
+    stage: "Contract Signed",
+    criticality: "2",
+  },
+  {
+    id: 12,
+    wayleave_id: "W3284.0007",
+    route_id: "R3284",
+    proprietor_id: "P305699",
+    proprietor_name: "Yuki Nakamura",
+    proprietor_address: "18, Stockwell Close, Bromley",
+    stage: "Letter 1",
+    criticality: "2",
+  },
 ];
 const WayLeaveList = () => {
-  const pageSize = 5; // Set your desired page size
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(pageSize);
-
-  const handleChangePage = (newPage) => {
-    setPage(newPage);
+  const getStagecolor = (stage) => {
+    switch (stage) {
+      case "Letter 1":
+        return "#0797FF";
+        // code to execute if expression equals value1
+        break;
+      case "Unreachable":
+        return "#EB6262";
+        break;
+      case "Contract Signed":
+        return "#5DB055";
+        break;
+      case "Contract being Reviewed":
+        break;
+      // ... more cases
+      default:
+      // code to execute if expression doesn't match any case
+    }
   };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
+  const columns = [
+    { field: "id", headerName: "ID" },
+    {
+      field: "wayleave_id",
+      headerName: "Wayleave ID",
+      width: 150,
+      sortable: false,
+      className: "custom-heading",
+    },
+    {
+      field: "route_id",
+      headerName: "Route ID",
+      width: 130,
+      sortable: false,
+      className: "custom-heading",
+    },
+    {
+      field: "proprietor_id",
+      sortable: false,
+      headerName: "Proprietor ID",
+      width: 150,
+    },
+    {
+      field: "proprietor_name",
+      sortable: false,
+      headerName: "Proprietor Name",
+      width: 230,
+    },
+    {
+      field: "proprietor_address",
+      headerName: "Propreitor Address",
+      width: 300,
+      maxWidth: 300,
+      sortable: false,
+    },
+    {
+      field: "stage",
+      headerName: "Stage",
+      width: 210,
+      // description: "This column has a value getter and is not sortable.",
+      sortable: false,
+      renderCell: (params) => {
+        return (
+          <>
+            {
+              <div className="stage-cell">
+                <li
+                  className="stage-status-color"
+                  style={{ color: getStagecolor(params.row.stage) }}
+                ></li>
+                <div>{params.row.stage}</div>
+              </div>
+            }
+          </>
+        );
+      },
+    },
+    {
+      field: "criticality",
+      sortable: false,
+      headerName: "Criticality",
+      width: 130,
+    },
+  ];
   return (
     <div className="wayleave-managment-container">
       <Header title={"Wayleave"} />
@@ -122,21 +221,13 @@ const WayLeaveList = () => {
         <div className="managment-title">Wayleave Management System</div>
         <div className="managment-button-Wrapper">
           <div className="search">
-            <IconButton
-              type="button"
-              sx={{ p: "8px" }}
-              aria-label="search"
+            <SearchIcon />
+            <InputBase
+              sx={{ ml: 1, flex: 1 }}
+              placeholder="search"
+              inputProps={{ "aria-label": "search" }}
               style={{ height: "40px" }}
-              //   className="search-inner"
-            >
-              <SearchIcon />
-              <InputBase
-                sx={{ ml: 1, flex: 1 }}
-                placeholder="search"
-                inputProps={{ "aria-label": "search" }}
-                style={{ height: "40px" }}
-              />
-            </IconButton>
+            />
           </div>
           <div className="buttons-box">
             <Button
@@ -157,16 +248,16 @@ const WayLeaveList = () => {
         </div>
       </div>
       <div className="managment-list-box">
-        <div style={{ height: 400, width: "100%" }}>
+        <div style={{ width: "100%" }}>
           <DataGrid
             rows={rows}
             columns={columns}
             initialState={{
               pagination: {
-                paginationModel: { page: 0, pageSize: 5 },
+                paginationModel: { page: 0, pageSize: 10 },
               },
             }}
-            pageSizeOptions={[5, 10]}
+            pageSizeOptions={[10, 20]}
             checkboxSelection
           />
         </div>

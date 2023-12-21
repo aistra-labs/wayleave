@@ -6,23 +6,47 @@
         align-items: center;
         padding: 15px;
         border-bottom: 1px solid #E8E8E8;
+        @media only screen and (max-width: 767px) {
+            flex-direction: column;
+            padding: 5px;
+        }
         .managment-title{
             color: #243347;
             font-size: 24px;
             font-weight: 600;
-            width: 60%;
+            width: 50%;
+            @media only screen and (max-width: 767px) {
+                width:100%;
+                margin:20px 0;
+                text-align: center;
+            }
         }
         .managment-button-Wrapper{
              display: flex;
              align-items: center;
              justify-content: flex-end;  
              width: 50%; 
+             @media only screen and (max-width: 767px) {
+                width:100%;
+                margin-left: 10px;
+            }
              .search{
                 width: 60%;
                 border:1px solid #ccc;
                 border-radius: 8px;
+                display: flex;
+                align-items: center;
+                padding: 0 10px;
+                color:#575756 !important;
                 .search-inner{
                     height: 40px;
+                    
+                }
+                .search-inner:visited{
+                    background-color: #fff !important;
+                }
+                @media only screen and (max-width: 767px) {
+                    width: 40%;
                 }
              }
              .buttons-box{
@@ -30,6 +54,10 @@
                 margin-left: 40px;
                 display: flex;
                 align-items: center;
+                @media only screen and (max-width: 767px) {
+                    margin-left: 10px;
+                    width: 60%;
+                }
                 button{
                     border: 1px solid #E0E0E0 !important;
                     color: #575756 !important;
@@ -42,4 +70,34 @@
     .managment-list-box{
         margin: 20px 0;
     }
+    .stage-cell{
+        display: flex;
+        align-items: center;
+        font-size: 13px !important;
+        color: #575756 !important;
+        .stage-status-color{
+        color: red;
+        font-size: 20px;
+        margin-right: -10px;
+        }
+    }
+}
+.MuiDataGrid-columnHeaderTitle{
+    color: #243347 !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+}
+.MuiDataGrid-cellContent{
+    color: #575756 !important;
+    font-size: 13px !important;
+    font-weight: 400 !important;
+}
+.css-1l55se7-MuiButtonBase-root-MuiIconButton-root:hover{
+    background-color: #fff !important;
+}
+.Mui-focusVisible{
+    background-color: #fff !important;
+}
+.Mui-focused{
+    background-color: #fff !important;
 }
