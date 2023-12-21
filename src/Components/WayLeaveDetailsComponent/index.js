@@ -2,7 +2,6 @@ import ChatSummaryComponent from "../ChatSummaryComponent";
 import Header from "../HeaderComponent";
 import images from "../images/images";
 import "../WayLeaveDetailsComponent/wayLeaveDetailsComponent.css";
-import Skeleton from "@mui/material/Skeleton";
 const WayLeaveComponent = ({ wayLeave, summary }) => {
   return (
     <>
