@@ -26,9 +26,9 @@ const WayLeaveDetailsContainer = () => {
     if (sourceArray.length === 3) {
       time = 500;
     } else if (sourceArray.length === 2) {
-      time = 40000;
-    } else if (sourceArray.length === 1) {
       time = 20000;
+    } else if (sourceArray.length === 1) {
+      time = 10000;
     } else {
       time = 10000;
     }
