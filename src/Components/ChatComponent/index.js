@@ -16,21 +16,42 @@ const Typewriter = ({ text }) => {
       intervalId = setInterval(() => {
         setDisplayText((prevText) => prevText + text[currentIndex]);
         setCurrentIndex((prevIndex) => prevIndex + 1);
+
+        // Check if it's the last message, then scroll
+        if (
+          currentIndex === 200 ||
+          currentIndex === 500 ||
+          currentIndex === 800 ||
+          currentIndex === 1200
+        ) {
+          if (lastMessageRef.current) {
+            lastMessageRef.current.scrollIntoView({
+              behavior: "smooth",
+            });
+          }
+        }
+
+        if (currentIndex === text.length - 1) {
+          if (lastMessageRef.current) {
+            lastMessageRef.current.scrollIntoView({
+              behavior: "smooth",
+            });
+          }
+        }
       }, 20); // Adjust the interval as needed
     }
 
     return () => clearInterval(intervalId);
   }, [text, currentIndex]);
 
-  useEffect(() => {
-    scrollToLastMessage();
-  }, [displayText]);
-
-  const scrollToLastMessage = () => {
-    if (lastMessageRef.current) {
-      lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  // const scrollToLastMessage = () => {
+  //   if (lastMessageRef.current) {
+  //     lastMessageRef.current.scrollIntoView({
+  //       behavior: "smooth",
+  //       block: "end",
+  //     });
+  //   }
+  // };
 
   // Function to sanitize HTML content
   const createMarkup = () => {
@@ -53,6 +74,7 @@ const ChatComponent = ({
   const [isloading, setIsloading] = useState(false);
   const [showTyping, setShowTyping] = useState(false);
   const [botTimerId, setBotTimerId] = useState(null);
+
   const scrollToLastMessage = () => {
     if (chatContainerRef.current) {
       const { scrollTop, scrollHeight, clientHeight } =
@@ -73,7 +95,7 @@ const ChatComponent = ({
     const newTimerId = setTimeout(() => {
       setMessages((prevMessages) => [...prevMessages, botMessageData]);
       scrollToLastMessage();
-    }, 40000);
+    }, 70000);
 
     // Update botTimerId state to store the new timer ID
     setBotTimerId(newTimerId);
@@ -218,6 +240,10 @@ const ChatComponent = ({
                 </div>
               </div>
             ))}
+          <div className="chatbot-wrapper">
+            <div className="extra-space" style={{ height: "20px" }}></div>
+          </div>
+
           {isloading && (
             <div class="chat-bubble">
               <div class="typing">
