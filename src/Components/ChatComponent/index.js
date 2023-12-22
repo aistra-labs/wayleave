@@ -51,9 +51,8 @@ const ChatComponent = ({
   const [messages, setMessages] = useState(messageData);
   const chatContainerRef = useRef(null);
   const [isloading, setIsloading] = useState(false);
-  const [ownRefresh, setOwnRefresh] = useState(false);
-  const [botMessage, setBotMessage] = useState(false);
   const [showTyping, setShowTyping] = useState(false);
+  const [botTimerId, setBotTimerId] = useState(null);
   const scrollToLastMessage = () => {
     if (chatContainerRef.current) {
       const { scrollTop, scrollHeight, clientHeight } =
@@ -69,12 +68,15 @@ const ChatComponent = ({
       sender: "Bot",
       text: "If you find the terms acceptable, kindly sign the wayleave agreement thanks!",
     };
-
-    setTimeout(() => {
-      if (botMessage === true) {
-        setMessages((prevMessages) => [...prevMessages, botMessageData]);
-      }
+    clearTimeout(botTimerId);
+    setBotTimerId(null);
+    const newTimerId = setTimeout(() => {
+      setMessages((prevMessages) => [...prevMessages, botMessageData]);
+      scrollToLastMessage();
     }, 40000);
+
+    // Update botTimerId state to store the new timer ID
+    setBotTimerId(newTimerId);
   };
 
   const currentDate = new Date();
@@ -124,7 +126,7 @@ const ChatComponent = ({
         sender: landLordName,
         sendTime: formattedDate,
       };
-      setBotMessage(false);
+      addBotlastMessage();
       setTimeout(() => {
         setMessages((prevMessages) => [...prevMessages, inputText]);
         setIsloading(true);
@@ -133,17 +135,13 @@ const ChatComponent = ({
       const result = await apiRequest(url, "POST", data);
       const userMessage = result.data;
       setIsloading(false);
-      setOwnRefresh(true);
-
       setTimeout(() => {
         refreshChat();
         setShowTyping(true);
         setMessages((prevMessages) => [...prevMessages, userMessage.response]);
-        setOwnRefresh(false);
-        setBotMessage(true);
         scrollToLastMessage();
-        // addBotlastMessage();
       }, 10);
+      // addBotlastMessage();
     } catch (error) {
       // Handle error
       console.error("Error in POST request:", error);
