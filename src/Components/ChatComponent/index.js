@@ -179,7 +179,14 @@ const ChatComponent = ({
                   }
                 >
                   {message.sender === "Bot" ? (
-                    <img src={images["bot.svg"]} loading="lazy" alt="bot" />
+                    <div className="bot-img">
+                      {" "}
+                      <img
+                        src={images["bot.png"]}
+                        loading="lazy"
+                        alt="bot"
+                      />{" "}
+                    </div>
                   ) : (
                     <div className="sender-name">{getName(message.sender)}</div>
                   )}
