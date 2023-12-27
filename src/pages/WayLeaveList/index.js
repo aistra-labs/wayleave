@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Header from "../../Components/HeaderComponent";
 import Button from "@mui/material/Button";
@@ -7,6 +7,7 @@ import TuneIcon from "@mui/icons-material/Tune";
 import "../WayLeaveList/wayLeaveList.css";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
+import apiRequest from "../../Components/api/api";
 
 const rows = [
   {
@@ -131,6 +132,17 @@ const rows = [
   },
 ];
 const WayLeaveList = () => {
+  useEffect(() => {
+    getWayleaveList();
+  }, []);
+
+  const getWayleaveList = async () => {
+    const url = "get/all";
+    const data = {};
+    const result = await apiRequest(url, "GET", data);
+    console.log(result, "result");
+  };
+
   const getStagecolor = (stage) => {
     switch (stage) {
       case "Letter 1":
