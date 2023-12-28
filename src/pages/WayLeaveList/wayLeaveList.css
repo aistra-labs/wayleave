@@ -101,3 +101,13 @@
 .Mui-focused{
     background-color: #fff !important;
 }
+.MuiDataGrid-cell {
+    white-space: normal !important;
+    /* text-align: center; */
+}
+
+.stage-text {
+    inline-size: 115px;
+    overflow-wrap: break-word;
+    font-size: 11px;
+}

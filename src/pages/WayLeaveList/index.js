@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Header from "../../Components/HeaderComponent";
 import Button from "@mui/material/Button";
@@ -9,129 +9,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import apiRequest from "../../Components/api/api";
 
-const rows = [
-  {
-    id: 1,
-    wayleave_id: "W3284.0001",
-    route_id: "R3284",
-    proprietor_id: "P305699",
-    proprietor_name: "Yuki Nakamura",
-    proprietor_address: "18, Stockwell Close, Bromley",
-    stage: "Letter 1",
-    criticality: "3",
-  },
-  {
-    id: 2,
-    wayleave_id: "W3284.0002",
-    route_id: "R3284",
-    proprietor_id: "P305699",
-    proprietor_name: "Yuki Nakamura",
-    proprietor_address: "18, Stockwell Close, Bromley",
-    stage: "Not yet Connected",
-    criticality: "4",
-  },
-  {
-    id: 3,
-    wayleave_id: "W3284.0003",
-    route_id: "R3284",
-    proprietor_id: "P305699",
-    proprietor_name: "Yuki Nakamura",
-    proprietor_address: "18, Stockwell Close, Bromley",
-    stage: "Unreachable",
-    criticality: "3",
-  },
-  {
-    id: 4,
-    wayleave_id: "W3284.0004",
-    route_id: "R3284",
-    proprietor_id: "P305699",
-    proprietor_name: "Yuki Nakamura",
-    proprietor_address: "18, Stockwell Close, Bromley",
-    stage: "Letter 2",
-    criticality: "6",
-  },
-  {
-    id: 5,
-    wayleave_id: "W3284.0005",
-    route_id: "R3284",
-    proprietor_id: "P305699",
-    proprietor_name: "Yuki Nakamura",
-    proprietor_address: "18, Stockwell Close, Bromley",
-    stage: "Letter 1",
-    criticality: "9",
-  },
-  {
-    id: 6,
-    wayleave_id: "W3284.0006",
-    route_id: "R3284",
-    proprietor_id: "P305699",
-    proprietor_name: "Yuki Nakamura",
-    proprietor_address: "18, Stockwell Close, Bromley",
-    stage: "Contract Signed",
-    criticality: "3",
-  },
-  {
-    id: 7,
-    wayleave_id: "W3284.0007",
-    route_id: "R3284",
-    proprietor_id: "P305699",
-    proprietor_name: "Yuki Nakamura",
-    proprietor_address: "18, Stockwell Close, Bromley",
-    stage: "Contract being Reviewed",
-    criticality: "2",
-  },
-  {
-    id: 8,
-    wayleave_id: "W3284.0007",
-    route_id: "R3284",
-    proprietor_id: "P305699",
-    proprietor_name: "Yuki Nakamura",
-    proprietor_address: "18, Stockwell Close, Bromley",
-    stage: "Contract being Reviewed",
-    criticality: "2",
-  },
-  {
-    id: 9,
-    wayleave_id: "W3284.0007",
-    route_id: "R3284",
-    proprietor_id: "P305699",
-    proprietor_name: "Yuki Nakamura",
-    proprietor_address: "18, Stockwell Close, Bromley",
-    stage: "Contract Signed",
-    criticality: "2",
-  },
-  {
-    id: 10,
-    wayleave_id: "W3284.0007",
-    route_id: "R3284",
-    proprietor_id: "P305699",
-    proprietor_name: "Yuki Nakamura",
-    proprietor_address: "18, Stockwell Close, Bromley",
-    stage: "Contract being Reviewed",
-    criticality: "2",
-  },
-  {
-    id: 11,
-    wayleave_id: "W3284.0007",
-    route_id: "R3284",
-    proprietor_id: "P305699",
-    proprietor_name: "Yuki Nakamura",
-    proprietor_address: "18, Stockwell Close, Bromley",
-    stage: "Contract Signed",
-    criticality: "2",
-  },
-  {
-    id: 12,
-    wayleave_id: "W3284.0007",
-    route_id: "R3284",
-    proprietor_id: "P305699",
-    proprietor_name: "Yuki Nakamura",
-    proprietor_address: "18, Stockwell Close, Bromley",
-    stage: "Letter 1",
-    criticality: "2",
-  },
-];
 const WayLeaveList = () => {
+  const [rows, setRows] = useState([]);
   useEffect(() => {
     getWayleaveList();
   }, []);
@@ -139,7 +18,18 @@ const WayLeaveList = () => {
   const getWayleaveList = async () => {
     const url = "get/all";
     const data = {};
-    const result = await apiRequest(url, "GET", data);
+    const result = await apiRequest(url, "POST", data);
+    const rows = result.data.map((item) => ({
+      id: item.wayLeaveId, // Assuming "wayLeaveId" should be used as "id"
+      wayleave_id: item.id,
+      route_id: item.id, // You might need to adjust this based on your actual data
+      proprietor_id: item.details.propreitorId,
+      proprietor_name: item.landLordName,
+      proprietor_address: item.details.propreitorAddress,
+      stage: item.details.currentState,
+      criticality: item.details.criticality,
+    }));
+    setRows(rows);
     console.log(result, "result");
   };
 
@@ -193,14 +83,14 @@ const WayLeaveList = () => {
     {
       field: "proprietor_address",
       headerName: "Propreitor Address",
-      width: 300,
-      maxWidth: 300,
+      width: 250,
+      maxWidth: 250,
       sortable: false,
     },
     {
       field: "stage",
       headerName: "Stage",
-      width: 210,
+      width: 180,
       // description: "This column has a value getter and is not sortable.",
       sortable: false,
       renderCell: (params) => {
@@ -212,7 +102,7 @@ const WayLeaveList = () => {
                   className="stage-status-color"
                   style={{ color: getStagecolor(params.row.stage) }}
                 ></li>
-                <div>{params.row.stage}</div>
+                <div className="stage-text">{params.row.stage}</div>
               </div>
             }
           </>
