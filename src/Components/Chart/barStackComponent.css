@@ -1,0 +1,66 @@
+.chart-wrapper {
+    margin: 10px 5px;
+    border-radius: 8px;
+    border: 1px solid #E8E8E8;
+    width: 100%;
+    padding: 15px 15px 0 15px;
+    height: 550px;
+    overflow: scroll;
+
+    @media only screen and (max-width: 767px) {
+        width: auto;
+        height: 100%;
+    }
+
+    .chart-info {
+        color: #243347;
+        font-size: 14px;
+        font-weight: 600;
+        margin: 15px
+    }
+
+    .chart-observation {
+        font-size: 11px;
+        margin: 0 10px 10px 10px;
+        color: #575756;
+
+    }
+}
+
+.chart-small-wrapper {
+    margin: 10px 5px;
+    border-radius: 8px;
+    border: 1px solid #E8E8E8;
+    /* width: 100%; */
+    padding: 15px 15px 0 15px;
+    height: 440px;
+    overflow: scroll;
+
+    @media only screen and (max-width: 767px) {
+        width: auto;
+        height: 100%;
+    }
+
+    .chart-info {
+        color: #243347;
+        font-size: 14px;
+        font-weight: 600;
+        margin: 15px
+    }
+
+    .chart-observation {
+        font-size: 11px;
+        margin: 0 10px 10px 10px;
+        color: #575756;
+
+    }
+}
+
+.apexcharts-legend {
+    left: auto !important;
+    top: 0 !important
+}
+
+.word-cloud {
+    margin: 30px 0;
+}
