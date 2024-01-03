@@ -3,6 +3,7 @@
     border-radius: 8px;
     padding: 10px;
     margin: 15px;
+    font-family: Gesta W01 Regular;
   .chat-summary-heading{
     display: flex;
     align-items: center;
@@ -10,8 +11,8 @@
     margin-left: 10px;
     .summary-text{
         margin-left:20px;
-        font-size: 18px;
-        font-weight: 600;
+        font-size: 20px;
+          font-weight: 700;
     }
     .summary-icon{
         width:42px;
@@ -19,13 +20,14 @@
     }
   }
   .chat-summary-wrapper{
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 16px;
+      line-height: 20px;
+      font-weight: 400;
     color: #575756;
     height: 200px;
     overflow: scroll;
-    li{
-        margin: 15px 0px;
+    .summary-line-text {
+        margin: 10px 0px;
     }
 }
 

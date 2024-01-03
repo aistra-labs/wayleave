@@ -16,7 +16,11 @@ const ChatSummaryComponent = ({ summary }) => {
       </div>
       <ul className="chat-summary-wrapper">
         {summary &&
-          summary.map((detail, index) => <li key={index}>{detail}</li>)}
+          summary.map((detail, index) => (
+            <li className="summary-line-text" key={index}>
+              {detail}
+            </li>
+          ))}
       </ul>
     </div>
   );
