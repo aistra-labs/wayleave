@@ -188,7 +188,7 @@ const ChatComponent = ({
   return (
     <div className="wayleave-chat-wrapper">
       <div>
-        <Header title={"Aistra Wayleave Bot"} />
+        <Header title={"Wayleave Chat"} />
       </div>
       <div className="chatbot-container">
         <div className="chatbot-messages" ref={chatContainerRef}>
