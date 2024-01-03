@@ -1,4 +1,4 @@
-const apiBaseUrl = "http://51.112.12.168:8080/wl/api/v1"; // Replace with your API base URL
+const apiBaseUrl = "https://orchestrator-apis.aistra.com/wl/api/v1"; // Replace with your API base URL
 
 const apiRequest = async (url, method = "GET", data = null) => {
   const apiUrl = `${apiBaseUrl}/${url}`;
