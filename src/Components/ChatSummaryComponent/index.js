@@ -15,7 +15,8 @@ const ChatSummaryComponent = ({ summary }) => {
         <p className="summary-text">Wayleave negotiation summary</p>
       </div>
       <ul className="chat-summary-wrapper">
-        {summary && summary.map((detail) => <li>{detail}</li>)}
+        {summary &&
+          summary.map((detail, index) => <li key={index}>{detail}</li>)}
       </ul>
     </div>
   );

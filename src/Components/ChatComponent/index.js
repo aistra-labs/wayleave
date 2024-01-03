@@ -194,7 +194,7 @@ const ChatComponent = ({
         <div className="chatbot-messages" ref={chatContainerRef}>
           {messages &&
             messages.map((message, index) => (
-              <div className="chatbot-wrapper">
+              <div className="chatbot-wrapper" key={index}>
                 <div
                   className={
                     message.sender === "Bot" ? "chat-userimg" : "chat-user"
