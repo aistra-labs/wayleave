@@ -1,12 +1,14 @@
 .wayleave-container{
     width: 100%;
     display: flex;
+    background-color: #ECEFF3;
     @media only screen and (max-width: 767px) {
         flex-direction: column;
     }
     .wayleave-details-container{
     width: 72%;
-    margin:5px 7px 5px 15px;
+    margin: 10px 7px 5px 15px;
+        background-color: #fff;
     @media only screen and (max-width: 767px) {
         width:100%;
         margin:0;
@@ -14,7 +16,8 @@
     }
     .wayleave-chat-container{
     width: 28%;
-    margin:5px 20px 0px 7px;
+    margin: 10px 20px 0px 7px;
+        background-color: #fff;
     @media only screen and (max-width: 767px) {
         width:100%;
          margin:15px 0;

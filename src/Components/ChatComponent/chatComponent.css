@@ -1,7 +1,7 @@
 .chatbot-container {
     width: 100%;
     margin: 20px 0 0px 0;
-    border: 1px solid #E8E8E8;
+    /* border: 1px solid #E8E8E8; */
     border-radius: 8px;
     background-color: #fff;
     @media only screen and (max-width: 767px) {
@@ -11,9 +11,9 @@
     position: relative;
   }
   .chatbot-messages {
-    height: 600px;
+    height: 570px;
     overflow-y: scroll;
-    padding: 8px;
+    padding: 12px;
     display: flex;
     flex-direction: column;
    

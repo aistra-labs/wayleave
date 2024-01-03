@@ -10,8 +10,11 @@ import Tooltip from "@mui/material/Tooltip";
 import images from "../images/images";
 const Header = ({ title }) => {
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" style={{ backgroundColor: "#243347" }}>
+    <Box sx={{ flexGrow: 1, boxShadow: "none" }}>
+      <AppBar
+        position="static"
+        style={{ backgroundColor: "#243347", boxShadow: "none" }}
+      >
         <Toolbar>
           <IconButton
             size="large"

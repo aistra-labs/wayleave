@@ -2,10 +2,12 @@
 .wayleave-details-wrapper{
     width: 100%;
     .wayleave-flex-wrapper{
+      padding: 0 10px;
     .wayleave-box-wrapper{
        width: 100%;
        display: flex;
        margin:15px 0;
+      
        @media only screen and (max-width: 767px) {
         flex-direction: column;
     }
